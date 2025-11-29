@@ -365,7 +365,7 @@ class QueryBuilderTest extends TestCase
         $response = Auvo::tasks()->get();
 
         // Testar métodos de Collection delegados
-        $this->assertCount(3, $response);
+        $this->assertEquals(3, $response->count());
         $this->assertEquals(1, $response->first()['taskID']);
 
         $filtered = $response->filter(fn ($task) => $task['finished'] === true);
@@ -383,7 +383,7 @@ class QueryBuilderTest extends TestCase
                     ],
                     'pagedSearchReturnData' => [
                         'page' => 1,
-                        'pageSize' => 100,
+                        'pageSize' => 2,
                         'totalItems' => 3,
                     ],
                 ],
@@ -395,7 +395,7 @@ class QueryBuilderTest extends TestCase
                     ],
                     'pagedSearchReturnData' => [
                         'page' => 2,
-                        'pageSize' => 100,
+                        'pageSize' => 2,
                         'totalItems' => 3,
                     ],
                 ],
