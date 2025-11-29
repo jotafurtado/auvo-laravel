@@ -31,3 +31,6 @@ yarn-error.log
 .env.backup
 .env.testing
 
+# Documentação temporária
+PUBLICACAO.md
+
