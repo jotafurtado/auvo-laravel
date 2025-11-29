@@ -1,0 +1,12 @@
+# Path-based git attributes
+# https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+
+# Ignore todos os arquivos desnecessários para produção
+/tests export-ignore
+/docs export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/phpunit.xml export-ignore
+/CHANGELOG.md export-ignore
+/.github export-ignore
+

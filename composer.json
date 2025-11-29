@@ -1,0 +1,57 @@
+{
+    "name": "jcf/auvo",
+    "description": "Pacote Laravel para integração com a API do Auvo - Sistema de gestão de serviços de campo (field service management)",
+    "keywords": [
+        "laravel",
+        "auvo",
+        "field-service",
+        "fsm",
+        "api",
+        "integração"
+    ],
+    "homepage": "https://github.com/jotacfurtado/auvo-laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "João C. Furtado",
+            "email": "jotacfurtado@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/jotacfurtado/auvo-laravel/issues",
+        "source": "https://github.com/jotacfurtado/auvo-laravel"
+    },
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "illuminate/http": "^10.0|^11.0|^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jcf\\Auvo\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jcf\\Auvo\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jcf\\Auvo\\Providers\\AuvoServiceProvider"
+            ],
+            "aliases": {
+                "Auvo": "Jcf\\Auvo\\Facades\\Auvo"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+

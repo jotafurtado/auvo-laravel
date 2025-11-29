@@ -1,0 +1,33 @@
+# Dependências do Composer
+/vendor/
+composer.lock
+
+# Dependências do Node (se houver)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testes
+.phpunit.result.cache
+.phpunit.cache
+/coverage/
+.coverage
+
+# Build e cache
+/build/
+.php_cs.cache
+.php-cs-fixer.cache
+
+# Environment
+.env
+.env.backup
+.env.testing
+
