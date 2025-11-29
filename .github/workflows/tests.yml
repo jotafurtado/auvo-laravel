@@ -22,6 +22,13 @@ jobs:
             testbench: ^9.0
           - laravel: 12.*
             testbench: ^10.0
+        exclude:
+          # Laravel 11 requer PHP ^8.2
+          - laravel: 11.*
+            php: 8.1
+          # Laravel 12 requer PHP ^8.2
+          - laravel: 12.*
+            php: 8.1
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
