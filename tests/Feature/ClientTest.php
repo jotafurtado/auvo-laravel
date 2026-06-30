@@ -191,4 +191,23 @@ class ClientTest extends TestCase
 
         $this->assertInstanceOf(\Jcf\Auvo\Query\TeamQuery::class, $teamsQuery);
     }
+
+    public function test_it_can_get_task_types_query_builder(): void
+    {
+        Http::fake([
+            'api.test.com/v2/login/' => Http::response([
+                'result' => [
+                    'authenticated' => true,
+                    'accessToken' => 'test-access-token',
+                    'created' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'expiration' => Carbon::now()->addMinutes(30)->format('Y-m-d H:i:s'),
+                    'message' => 'OK',
+                ],
+            ], 200),
+        ]);
+
+        $taskTypesQuery = Auvo::taskTypes();
+
+        $this->assertInstanceOf(\Jcf\Auvo\Query\TaskTypeQuery::class, $taskTypesQuery);
+    }
 }

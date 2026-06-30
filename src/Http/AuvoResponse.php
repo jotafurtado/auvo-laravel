@@ -104,6 +104,16 @@ class AuvoResponse
     }
 
     /**
+     * Verifica se a resposta inclui link HATEOAS para a próxima página.
+     */
+    public function hasNextPageLink(): bool
+    {
+        return $this->links()->contains(
+            fn (mixed $link): bool => is_array($link) && ($link['rel'] ?? '') === 'nextPage',
+        );
+    }
+
+    /**
      * Retorna os dados brutos como Collection.
      */
     public function raw(): Collection

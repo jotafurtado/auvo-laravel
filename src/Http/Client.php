@@ -9,6 +9,7 @@ use Jcf\Auvo\Auth\AuthManager;
 use Jcf\Auvo\Exceptions\AuvoException;
 use Jcf\Auvo\Query\CustomerQuery;
 use Jcf\Auvo\Query\TaskQuery;
+use Jcf\Auvo\Query\TaskTypeQuery;
 use Jcf\Auvo\Query\TeamQuery;
 use Jcf\Auvo\Query\UserQuery;
 
@@ -186,5 +187,13 @@ class Client
     public function teams(): TeamQuery
     {
         return new TeamQuery($this->http);
+    }
+
+    /**
+     * Retorna uma instância do Query Builder para Task Types.
+     */
+    public function taskTypes(): TaskTypeQuery
+    {
+        return new TaskTypeQuery($this->http);
     }
 }

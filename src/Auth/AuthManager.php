@@ -25,6 +25,8 @@ class AuthManager
     public function signIn(): Token
     {
         $response = Http::baseUrl($this->baseUri)
+            ->timeout(30)
+            ->retry(3, 200)
             ->withHeaders([
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',

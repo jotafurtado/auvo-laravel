@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Jcf\Auvo\Query\TaskQuery tasks()
  * @method static \Jcf\Auvo\Query\CustomerQuery customers()
  * @method static \Jcf\Auvo\Query\TeamQuery teams()
+ * @method static \Jcf\Auvo\Query\TaskTypeQuery taskTypes()
  */
 class Auvo extends Facade
 {

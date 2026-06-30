@@ -101,6 +101,47 @@ class TaskQuery extends QueryBuilder
     }
 
     /**
+     * Filter tasks by comma-separated list of task type IDs.
+     */
+    public function typeList(string $csv): static
+    {
+        $this->filters['typeList'] = $csv;
+
+        return $this;
+    }
+
+    /**
+     * Filter tasks updated since the given date (incremental sync cursor).
+     *
+     * Maps to Auvo's `paramFilter.dateLastUpdate`.
+     */
+    public function dateLastUpdate(string $date): static
+    {
+        if (! str_contains($date, 'T')) {
+            $date .= 'T00:00:00';
+        }
+
+        $this->filters['dateLastUpdate'] = $date;
+
+        return $this;
+    }
+
+    /**
+     * Target the `GetDeletedTasks` endpoint for soft-delete reconciliation.
+     *
+     * Mutates the query endpoint to `/tasks/GetDeletedTasks`; further filters
+     * (period, typeList, etc.) continue to apply.
+     */
+    public function deleted(): static
+    {
+        if (! str_ends_with($this->endpoint, '/GetDeletedTasks')) {
+            $this->endpoint .= '/GetDeletedTasks';
+        }
+
+        return $this;
+    }
+
+    /**
      * Set the page number for pagination.
      */
     public function page(int $page): static

@@ -49,8 +49,7 @@ class AllPagesQuery
             // Adiciona as entidades ao resultado total
             $allResults = $allResults->merge($entities);
 
-            // Verifica se há mais páginas
-            if (! $response->hasMorePages()) {
+            if (! $this->shouldFetchNextPage($response, $entities->count())) {
                 break;
             }
 
@@ -58,5 +57,30 @@ class AllPagesQuery
         }
 
         return $allResults;
+    }
+
+    /**
+     * Determina se deve buscar a próxima página.
+     *
+     * Alguns endpoints da Auvo (ex.: /tasktypes) retornam totalItems=0 mesmo
+     * com resultados paginados; nesses casos, continua enquanto a página atual
+     * estiver cheia ou houver link HATEOAS nextPage.
+     */
+    protected function shouldFetchNextPage(AuvoResponse $response, int $entityCount): bool
+    {
+        if ($response->hasMorePages()) {
+            return true;
+        }
+
+        if ($response->hasNextPageLink()) {
+            return true;
+        }
+
+        // Fallback: alguns endpoints (ex.: /tasktypes) retornam totalItems=0.
+        if ($response->totalItems() === 0 && $entityCount >= self::PAGE_SIZE) {
+            return true;
+        }
+
+        return false;
     }
 }
