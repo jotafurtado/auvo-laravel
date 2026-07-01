@@ -127,6 +127,34 @@ class TaskQuery extends QueryBuilder
     }
 
     /**
+     * Filter by a single Auvo task identifier.
+     *
+     * Maps to Auvo's `paramFilter.taskID`.
+     */
+    public function taskId(int $taskId): static
+    {
+        $this->filters['taskID'] = $taskId;
+
+        return $this;
+    }
+
+    /**
+     * Fetch the complete detail for one task.
+     *
+     * @return array<string, mixed>
+     */
+    public function detail(int $taskId): array
+    {
+        $response = $this->find($taskId)->get();
+
+        if (is_array($response)) {
+            return $response;
+        }
+
+        return $response->entityList()->first() ?? [];
+    }
+
+    /**
      * Target the `GetDeletedTasks` endpoint for soft-delete reconciliation.
      *
      * Mutates the query endpoint to `/tasks/GetDeletedTasks`; further filters
