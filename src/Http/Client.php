@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Jcf\Auvo\Auth\AuthManager;
 use Jcf\Auvo\Exceptions\AuvoException;
 use Jcf\Auvo\Query\CustomerQuery;
+use Jcf\Auvo\Query\QuestionnaireQuery;
 use Jcf\Auvo\Query\TaskQuery;
 use Jcf\Auvo\Query\TaskTypeQuery;
 use Jcf\Auvo\Query\TeamQuery;
@@ -195,5 +196,13 @@ class Client
     public function taskTypes(): TaskTypeQuery
     {
         return new TaskTypeQuery($this->http);
+    }
+
+    /**
+     * Retorna uma instância do Query Builder para Questionnaires.
+     */
+    public function questionnaires(): QuestionnaireQuery
+    {
+        return new QuestionnaireQuery($this->http);
     }
 }

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Jcf\Auvo\Query\CustomerQuery customers()
  * @method static \Jcf\Auvo\Query\TeamQuery teams()
  * @method static \Jcf\Auvo\Query\TaskTypeQuery taskTypes()
+ * @method static \Jcf\Auvo\Query\QuestionnaireQuery questionnaires()
  */
 class Auvo extends Facade
 {
