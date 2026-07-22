@@ -111,7 +111,7 @@ abstract class QueryBuilder
         }
 
         try {
-            $response = $this->http->get($uri, $requestParams);
+            $response = $this->http->get($uri, $requestParams)->throw();
         } catch (\Illuminate\Http\Client\RequestException $e) {
             return $this->handleHttpException($e);
         }
@@ -141,7 +141,7 @@ abstract class QueryBuilder
         $payload = ! empty($data) ? $data : $this->data;
 
         try {
-            $response = $this->http->post($uri, $payload);
+            $response = $this->http->post($uri, $payload)->throw();
         } catch (\Illuminate\Http\Client\RequestException $e) {
             return $this->handleHttpException($e);
         }
@@ -169,7 +169,7 @@ abstract class QueryBuilder
         $payload = ! empty($data) ? $data : $this->data;
 
         try {
-            $response = $this->http->patch($uri, $payload);
+            $response = $this->http->patch($uri, $payload)->throw();
         } catch (\Illuminate\Http\Client\RequestException $e) {
             return $this->handleHttpException($e);
         }
@@ -197,7 +197,7 @@ abstract class QueryBuilder
         $payload = ! empty($data) ? $data : $this->data;
 
         try {
-            $response = $this->http->delete($uri, $payload);
+            $response = $this->http->delete($uri, $payload)->throw();
         } catch (\Illuminate\Http\Client\RequestException $e) {
             return $this->handleHttpException($e);
         }

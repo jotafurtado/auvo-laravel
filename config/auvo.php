@@ -59,7 +59,18 @@ return [
     |
     */
 
-    'timeout' => env('AUVO_TIMEOUT', 120),
+    'timeout' => env('AUVO_TIMEOUT', 20),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Connect Timeout
+    |--------------------------------------------------------------------------
+    |
+    | Tempo máximo em segundos para estabelecer a conexão com a API.
+    |
+    */
+
+    'connect_timeout' => env('AUVO_CONNECT_TIMEOUT', 5),
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +94,7 @@ return [
     |
     */
 
-    'retry_delay' => env('AUVO_RETRY_DELAY', 100),
+    'retry_delay' => env('AUVO_RETRY_DELAY', 250),
 
     /*
     |--------------------------------------------------------------------------

@@ -42,6 +42,7 @@ class AuvoServiceProvider extends ServiceProvider
                 authManager: $authManager,
                 baseUri: $config['base_uri'],
                 timeout: $config['timeout'] ?? 30,
+                connectTimeout: $config['connect_timeout'] ?? 5,
                 retry: $config['retry'] ?? 3,
                 retryDelay: $config['retry_delay'] ?? 100,
                 logRequests: $config['log_requests'] ?? false,

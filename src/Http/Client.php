@@ -2,7 +2,9 @@
 
 namespace Jcf\Auvo\Http;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Jcf\Auvo\Auth\AuthManager;
@@ -22,6 +24,7 @@ class Client
         protected AuthManager $authManager,
         protected string $baseUri,
         protected int $timeout = 30,
+        protected int $connectTimeout = 5,
         protected int $retry = 3,
         protected int $retryDelay = 100,
         protected bool $logRequests = false,
@@ -39,7 +42,33 @@ class Client
 
             $this->http = Http::baseUrl($this->baseUri)
                 ->timeout($this->timeout)
-                ->retry($this->retry, $this->retryDelay)
+                ->connectTimeout($this->connectTimeout)
+                ->retry(
+                    $this->retry,
+                    function (int $attempt, \Exception $exception): int {
+                        if ($exception instanceof RequestException) {
+                            $retryAfter = $exception->response->header('Retry-After');
+
+                            if (is_numeric($retryAfter)) {
+                                return (int) $retryAfter * 1000;
+                            }
+                        }
+
+                        return $this->retryDelay * $attempt;
+                    },
+                    static function (\Throwable $exception, PendingRequest $request): bool {
+                        if ($exception instanceof ConnectionException) {
+                            return true;
+                        }
+
+                        if (! $exception instanceof RequestException) {
+                            return false;
+                        }
+
+                        return $exception->response->status() === 429
+                            || $exception->response->serverError();
+                    },
+                )
                 ->withHeaders([
                     'Authorization' => 'Bearer '.$accessToken,
                     'Accept' => 'application/json',
