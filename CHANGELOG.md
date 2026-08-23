@@ -7,6 +7,10 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Corrigido
+- Tratamento de falha de autenticação no `AuthManager`, evitando exceção não tratada `RequestException` e retentando apenas falhas transitórias de conexão e servidor.
+- Configuração de CI no GitHub Actions com desativação do bloqueio de segurança do Composer em versões matriz do Laravel 11.
+
 ## [1.0.0] - 2024-11-27
 
 ### Adicionado

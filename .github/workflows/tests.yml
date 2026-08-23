@@ -10,9 +10,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
-        php: [8.2, 8.3]
+        php: [8.2, 8.3, 8.4]
         laravel: [11.*, 12.*]
         dependency-version: [prefer-lowest, prefer-stable]
         include:
@@ -35,11 +35,14 @@ jobs:
           coverage: none
 
       - name: Install dependencies
+        env:
+          COMPOSER_POLICY_ADVISORIES_BLOCK: 0
+          COMPOSER_NO_AUDIT: 1
         run: |
+          composer config policy.advisories.block false --no-interaction || true
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
           composer require "orchestra/testbench:${{ matrix.testbench }}" --dev --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
-
       - name: Execute tests
         run: vendor/bin/phpunit
 

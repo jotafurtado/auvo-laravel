@@ -2,6 +2,9 @@
 
 namespace Jcf\Auvo\Auth;
 
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Jcf\Auvo\Exceptions\AuthenticationException;
 use Jcf\Auvo\Exceptions\AuvoException;
@@ -26,7 +29,23 @@ class AuthManager
     {
         $response = Http::baseUrl($this->baseUri)
             ->timeout(30)
-            ->retry(3, 200)
+            ->retry(
+                3,
+                200,
+                static function (\Throwable $exception, PendingRequest $request): bool {
+                    if ($exception instanceof ConnectionException) {
+                        return true;
+                    }
+
+                    if (! $exception instanceof RequestException) {
+                        return false;
+                    }
+
+                    return $exception->response->status() === 429
+                        || $exception->response->serverError();
+                },
+                throw: false,
+            )
             ->withHeaders([
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
